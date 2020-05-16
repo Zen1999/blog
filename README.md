@@ -37,21 +37,26 @@
 
 ## 资料
 
-https://spring.io/guides Spring 官方向导
+[Spring 官方向导](https://spring.io/guides)
 
-https://spring.io/guides/gs/serving-web-content/ Spring-web-content 文档
+[Spring-web-content 文档](https://spring.io/guides/gs/serving-web-content/) 
 
-https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys git 部署 ssh 密钥
+[git 部署 ssh 密钥](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) 
 
-https://v3.bootcss.com/getting-started/ bootstrap 搭建前端页面
+[bootstrap 搭建前端页面](https://v3.bootcss.com/getting-started/) 
 
-
+[Github OAuth](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
 
 ## 工具
 
-https://git-scm.com/ git
+[Git](https://git-scm.com/)
 
+[Visual Paradigm](https://www.visual-paradigm.com/cn/)
 
+[] ()
+
+## 第三方库
+[OkHttp](https://square.github.io/okhttp)
 
 ## 技巧
 
