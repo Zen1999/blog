@@ -9,6 +9,8 @@ import zen.community.dto.AccessTokenDTO;
 import zen.community.dto.GithubUser;
 import zen.community.provider.GithubProvider;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * @author Zen
@@ -29,10 +31,18 @@ public class AuthorizeController {
   private String redirect_uri;
 
   @GetMapping("/callback")
-  public String callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state) {
+  public String callback(@RequestParam(name = "code") String code,
+                         @RequestParam(name = "state") String state,
+                         HttpServletRequest request) {
     AccessTokenDTO accessTokenDTO = new AccessTokenDTO(client_id, client_secret, code, redirect_uri, state);
     String accessToken = githubProvider.getAccessToken(accessTokenDTO);
     GithubUser user = githubProvider.getUser(accessToken);
-    return "index";
+    if (user != null) {
+      // 用户信息获取成功，改变登录态
+      request.getSession().setAttribute("user", user);
+    } else {
+
+    }
+    return "redirect:/";
   }
 }
