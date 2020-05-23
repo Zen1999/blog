@@ -16,9 +16,6 @@ class CommunityApplicationTests {
   void contextLoads() {
     // 测试连接 H2 database
     // H2 database 只能支持单线程读写
-    User user = new User("1", "1", "1", 1L);
-    user.setGmt_modified(1L);
-    userMapper.insert(user);
   }
 
 }

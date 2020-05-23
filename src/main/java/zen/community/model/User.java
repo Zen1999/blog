@@ -1,6 +1,8 @@
 package zen.community.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Zen
@@ -9,18 +11,19 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
 public class User {
   private Integer id;
+  private String accountId;
   private String name;
-  private String account_id;
   private String token;
-  private Long gmt_create;
-  private Long gmt_modified;
+  private Long gmtCreate;
+  private Long gmtModified;
 
-  public User(String name, String account_id, String token, Long gmt_create) {
+  public User(String name, String accountId, String token, Long gmtCreate) {
     this.name = name;
-    this.account_id = account_id;
+    this.accountId = accountId;
     this.token = token;
-    this.gmt_create = gmt_create;
+    this.gmtCreate = gmtCreate;
   }
 }

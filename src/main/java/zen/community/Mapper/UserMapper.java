@@ -1,7 +1,7 @@
 package zen.community.Mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 import zen.community.model.User;
 
@@ -14,8 +14,9 @@ import zen.community.model.User;
 @Mapper
 public interface UserMapper {
 
-  @Insert("INSERT INTO USER (account_id, name, token, gmt_create, gmt_modified) VALUES (#{account_id}, #{name}, #{token}, #{gmt_create}, #{gmt_modified});")
+  @Insert("INSERT INTO user (account_id, name, token, gmt_create, gmt_modified) VALUES (#{accountId}, #{name}, #{token}, #{gmtCreate}, #{gmtModified});")
   void insert(User user);
 
-
+  @Select("SELECT * FROM user WHERE token = #{token};")
+  User getUserByToken(@Param("token") String token);
 }

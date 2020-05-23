@@ -11,7 +11,9 @@ import zen.community.dto.GithubUser;
 import zen.community.model.User;
 import zen.community.provider.GithubProvider;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 
@@ -39,7 +41,7 @@ public class AuthorizeController {
   @GetMapping("/callback")
   public String callback(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
-                         HttpServletRequest request) {
+                         HttpServletResponse response) {
     AccessTokenDTO accessTokenDTO = new AccessTokenDTO(client_id, client_secret, code, redirect_uri, state);
     String accessToken = githubProvider.getAccessToken(accessTokenDTO);
     GithubUser githubUser = githubProvider.getUser(accessToken);
@@ -49,10 +51,10 @@ public class AuthorizeController {
           String.valueOf(githubUser.getId()),
           UUID.randomUUID().toString(),
           System.currentTimeMillis());
-      user.setGmt_modified(user.getGmt_create());
+      user.setGmtModified(user.getGmtCreate());
       userMapper.insert(user);
       // 用户信息获取成功，改变登录态
-      request.getSession().setAttribute("user", githubUser);
+      response.addCookie(new Cookie("token", user.getToken()));
     }
     return "redirect:/";
   }
