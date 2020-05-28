@@ -14,7 +14,7 @@ import zen.community.model.User;
 @Mapper
 public interface UserMapper {
 
-  @Insert("INSERT INTO user (account_id, name, token, gmt_create, gmt_modified) VALUES (#{accountId}, #{name}, #{token}, #{gmtCreate}, #{gmtModified});")
+  @Insert("INSERT INTO user (account_id, name, token, gmt_create, gmt_modified, bio, avatar_url) VALUES (#{accountId}, #{name}, #{token}, #{gmtCreate}, #{gmtModified}, #{bio}, #{avatarUrl});")
   void insert(User user);
 
   @Select("SELECT * FROM user WHERE token = #{token};")

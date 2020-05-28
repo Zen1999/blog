@@ -4,8 +4,8 @@
   <title>社区</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <!--min.css-->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/css/bootstrap-theme.min.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -25,12 +25,15 @@
         <button type="submit" class="btn btn-default">搜索</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li th:unless="${session.user != null}">
+        <li th:if="${session.user} != null">
+          <a href="/publish">发布</a>
+        </li>
+        <li th:if="${session.user} == null">
           <!-- unless 属性: 除了 session.user 不为空, 其他条件都渲染该标签 -->
           <a href="https://github.com/login/oauth/authorize?client_id=8d5eabdc825de277497a&redirect_uri=http://localhost:8888/callback&scope=user&state=1">登录</a>
         </li>
         <!-- Github Oauth url : https://github.com/login/oauth/authorize?client_id=8d5eabdc825de277497a&redirect_uri=http://localhost:8888/callback&scope=user&state=1 -->
-        <li class="dropdown" th:if="${session.user != null}">
+        <li class="dropdown" th:if="${session.user} != null">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
              aria-expanded="false">[[${session.user.name}]]<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -43,7 +46,7 @@
     </div>
   </div>
 </nav>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
-<script src="js/bootstrap.min.js" type="application/javascript"></script>
+<script src="lib/js/jquery.js"></script>
+<script src="lib/js/bootstrap.min.js" type="application/javascript"></script>
 </body>
 </html>

@@ -52,7 +52,7 @@ public class GithubProvider {
       return JSON.parseObject(response.body().string(), GithubUser.class);
     } catch (IOException e) {
       e.printStackTrace();
+      return null;
     }
-    return null;
   }
 }
