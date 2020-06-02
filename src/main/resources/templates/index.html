@@ -6,6 +6,7 @@
   <!--min.css-->
   <link rel="stylesheet" href="lib/css/bootstrap.min.css">
   <link rel="stylesheet" href="lib/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -15,7 +16,7 @@
               data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">社区</span>
       </button>
-      <a class="navbar-brand" href="#">社区</a>
+      <a class="navbar-brand" href="/">社区</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <form class="navbar-form navbar-left">
@@ -46,6 +47,66 @@
     </div>
   </div>
 </nav>
+<div class="container padding-box">
+  <div class="row">
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+      <h3><span class="glyphicon glyphicon-list list-icon" aria-hidden="true"></span>发现</h3>
+      <hr/>
+      <div class="media media-sm" th:each="question : ${pagination.getData()}">
+        <div class="media-left media-margin">
+          <a href="#">
+            <img class="media-object img-rounded user-avatar"
+                 src="https://avatars0.githubusercontent.com/u/43899044?v=4"
+                 th:src="${question.creator.avatarUrl}">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading" th:text="${question.title}"></h4>
+          [[${question.description}]]
+          <br/>
+          <span class="desc-text">
+            <span th:text="${question.likeCount}"></span> 人关注 •
+            <span th:text="${question.commentCount}"></span> 个回复 •
+            <span th:text="${question.viewCount}"></span> 次浏览 •
+            <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+          </span>
+        </div>
+      </div>
+      <nav aria-label="Page navigation" class="pagination-fixed">
+        <ul class="pagination">
+          <li th:if="${pagination.getShowFirst()}">
+            <a th:href="@{/(page=1)}" aria-label="First">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li th:if="${pagination.getShowPre()}">
+            <a th:href="@{/(page=${pagination.getCurrentPage() - 1})}" aria-label="Previous">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+          <li th:each="page : ${pagination.getPages()}" th:class="${pagination.getCurrentPage() == page}? 'active' : ''">
+            <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+          </li>
+          <li th:if="${pagination.getShowNext()}">
+            <a th:href="@{/(page=${pagination.getCurrentPage() + 1})}" aria-label="Next">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+          <li th:if="${pagination.getShowEnd()}">
+            <a th:href="@{/(page=${pagination.getTotalPage()})}" aria-label="End">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+      <div class="help">
+        <h4 class="help-title">热门话题</h4>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="lib/js/jquery.js"></script>
 <script src="lib/js/bootstrap.min.js" type="application/javascript"></script>
 </body>
