@@ -24,7 +24,7 @@ public interface QuestionMapper {
   // 查询的 Question 对象没有用户头像，需要关联查询
   @Results(id = "creatorConstructor",
       value = @Result(column = "creator_id", property = "creator",
-          one = @One(select = "com.zen.community.mapper.UserMapper.findById")))
+          one = @One(select = "com.zen.community.mapper.UserMapper.getUserById")))
   @Select("SELECT * FROM question")
   List<QuestionDTO> list();
 
