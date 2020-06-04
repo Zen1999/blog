@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -41,19 +42,25 @@ public class AuthorizeController {
   public String callback(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
                          HttpServletResponse response) {
+    User user = null;
     AccessTokenDTO accessTokenDTO = new AccessTokenDTO(client_id, client_secret, code, redirect_uri, state);
     String accessToken = githubProvider.getAccessToken(accessTokenDTO);
     GithubUser githubUser = githubProvider.getUser(accessToken);
+    // 获取用户成功并且在数据库中没有该用户的字段
     if (githubUser != null) {
-      // token 字段的数据结构为 CHAR(36) 使用 UUID.randomUUID() 生成的通用唯一识别码 插入记录
-      User user = new User(githubUser.getName(),
-          String.valueOf(githubUser.getId()),
-          UUID.randomUUID().toString(),
-          githubUser.getBio(),
-          githubUser.getAvatarUrl(),
-          System.currentTimeMillis());
-      user.setGmtModified(user.getGmtCreate());
-      userMapper.insert(user);
+      // 获取 githubUser 的 id
+      String accountId = String.valueOf(githubUser.getId());
+      if ((user = userMapper.getUserByAccountId(accountId)) == null) {
+        // token 字段的数据结构为 CHAR(36) 使用 UUID.randomUUID() 生成的通用唯一识别码 插入记录
+        user = new User(githubUser.getName(),
+            accountId,
+            UUID.randomUUID().toString(),
+            githubUser.getBio(),
+            githubUser.getAvatarUrl(),
+            System.currentTimeMillis());
+        user.setGmtModified(user.getGmtCreate());
+        userMapper.insert(user);
+      }
       // 用户信息获取成功，改变登录态
       response.addCookie(new Cookie("token", user.getToken()));
     }

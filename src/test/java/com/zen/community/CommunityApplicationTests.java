@@ -23,8 +23,6 @@ class CommunityApplicationTests {
   void contextLoads() {
     // 测试连接 H2 database
     // H2 database 只能支持单线程读写
-    PaginationDTO paginationDTO = new PaginationDTO();
-    paginationDTO.setPagination(100, 4, 10);
   }
 
 }

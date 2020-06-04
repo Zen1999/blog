@@ -2,12 +2,9 @@ package com.zen.community.controller;
 
 import com.zen.community.context.PaginationContext;
 import com.zen.community.dto.PaginationDTO;
-import com.zen.community.dto.QuestionDTO;
-import com.zen.community.mapper.QuestionMapper;
 import com.zen.community.mapper.UserMapper;
 import com.zen.community.model.User;
 import com.zen.community.service.QuestionService;
-import com.zen.community.utils.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -54,7 +50,7 @@ public class IndexController {
         }
       }
        // 如果 user 查询后不等于空 则将 user 对象 添加到请求域
-      if (!Objects.isNull(user)) {
+      if (user != null) {
         request.getSession().setAttribute("user", user);
       }
     }
