@@ -29,9 +29,20 @@ public interface QuestionMapper {
   List<QuestionDTO> list();
 
   // Mybatis 注解版 使用了方法名作为方法映射id 所以在 Mapper 接口中不能重载方法
+  // 查询问题根据修改时间排序
   @ResultMap(value = "creatorConstructor")
-  @Select("SELECT * FROM question LIMIT #{offset}, #{size}")
+  @Select("SELECT * FROM question ORDER BY GMT_MODIFIED DESC LIMIT #{offset}, #{size}")
   List<QuestionDTO> paginationList(@Param("offset") Integer offset, @Param("size") Integer size);
+
+  // 查询问题根据修改时间排序
+  @ResultMap(value = "creatorConstructor")
+  @Select("SELECT * FROM question WHERE creator_id = #{userId} ORDER BY GMT_MODIFIED DESC LIMIT #{offset}, #{size}")
+  List<QuestionDTO> paginationListByUserId(@Param("userId") Integer userId,
+                                       @Param("offset") Integer offset,
+                                       @Param("size") Integer size);
+
+  @Select("SELECT COUNT(1) FROM QUESTION WHERE creator_id = #{userId};")
+  Integer countByUserId(@Param("userId") Integer userId);
 
   @Select("SELECT COUNT(1) FROM QUESTION;")
   Integer count();

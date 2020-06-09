@@ -36,4 +36,21 @@ public class QuestionService {
     paginationDTO.setPagination(count, page, size);
     return paginationDTO;
   }
+
+  public PaginationDTO paginationDataById(Integer userId, Integer page, Integer size) {
+    if (page <= 0) page = Integer.parseInt(PaginationContext.pageDefault);
+    if (size <= 0) size = Integer.parseInt(PaginationContext.sizeDefault);
+    PaginationDTO paginationDTO = new PaginationDTO();
+    // 计算偏移量
+    Integer offset = PaginationUtil.page2Offset(page, size);
+    // 查询分页后的数据
+    List<QuestionDTO> data = questionMapper.paginationListByUserId(userId, offset, size);
+
+    Integer count = questionMapper.countByUserId(userId);
+
+    paginationDTO.setData(data);
+    paginationDTO.setPagination(count, page, size);
+    return paginationDTO;
+  }
+
 }

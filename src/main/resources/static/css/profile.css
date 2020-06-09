@@ -1,0 +1,29 @@
+/* profile.css */
+.profile-menu {
+  margin-top: 25px;
+}
+
+.list-icon {
+  margin-right: 4px;
+}
+
+.media-sm {
+  font-size: 12px;
+}
+
+.media-sm .user-avatar {
+  height: 55px;
+}
+
+.media-sm .desc-text {
+  color: #999;
+  font-size: 10px;
+}
+
+.media-margin {
+  padding-right: 18px;
+}
+
+.pagination-fixed {
+  float: right;
+}

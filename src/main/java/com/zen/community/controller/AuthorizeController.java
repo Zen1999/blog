@@ -62,7 +62,10 @@ public class AuthorizeController {
         userMapper.insert(user);
       }
       // 用户信息获取成功，改变登录态
-      response.addCookie(new Cookie("token", user.getToken()));
+      Cookie cookie = new Cookie("token", user.getToken());
+      // cookie 存活时间 一周
+      cookie.setMaxAge(7*24*60*60);
+      response.addCookie(cookie);
     }
     return "redirect:/";
   }

@@ -32,32 +32,12 @@ public class IndexController {
 
   // 增加分页功能
   @GetMapping("/")
-  public String index(HttpServletRequest request,
-                      Model model,
+  public String index(Model model,
                       @RequestParam(name = "page", defaultValue = PaginationContext.pageDefault) Integer page,
                       @RequestParam(name = "size", defaultValue = PaginationContext.sizeDefault) Integer size) {
-    // 做出 page 和 size 正数判断
-    User user = null;
-    Cookie[] cookies = request.getCookies();
-    if (!Objects.isNull(cookies)) {
-      // 遍历 cookies 判断是否存在 name 为 token 的 value
-      for (Cookie cookie : cookies) {
-        if ("token".equals(cookie.getName())) {
-          // 找到 value 后 查找数据库 找出 user 对象 并 跳出循环
-          String value = cookie.getValue();
-          user = userMapper.getUserByToken(value);
-          break;
-        }
-      }
-       // 如果 user 查询后不等于空 则将 user 对象 添加到请求域
-      if (user != null) {
-        request.getSession().setAttribute("user", user);
-      }
-    }
-
+    // 添加拦截器 实现判断登录逻辑
     // 查询问题信息
     PaginationDTO paginationDTO = questionService.paginationData(page, size);
-
 
     // 放入 model 并传入 thymeleaf
     model.addAttribute("pagination", paginationDTO);

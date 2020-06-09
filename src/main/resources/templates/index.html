@@ -4,9 +4,9 @@
   <title>社区</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <!--min.css-->
-  <link rel="stylesheet" href="lib/css/bootstrap.min.css">
-  <link rel="stylesheet" href="lib/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/lib/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 <!-- 替换为导航模板 -->
@@ -48,7 +48,7 @@
               <span aria-hidden="true">&lt;</span>
             </a>
           </li>
-          <li th:each="page : ${pagination.getPages()}" th:class="${pagination.getCurrentPage() == page}? 'active' : ''">
+            <li th:each="page : ${pagination.getPages()}" th:class="${pagination.getCurrentPage() == page}? 'active' : ''">
             <a th:href="@{/(page=${page})}" th:text="${page}"></a>
           </li>
           <li th:if="${pagination.getShowNext()}">
@@ -71,7 +71,7 @@
     </div>
   </div>
 </div>
-<script src="lib/js/jquery.js"></script>
-<script src="lib/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js" type="application/javascript"></script>
 </body>
 </html>
