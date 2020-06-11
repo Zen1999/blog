@@ -1,12 +1,15 @@
 package com.zen.community.controller;
 
+import com.zen.community.dto.QuestionDTO;
 import com.zen.community.mapper.QuestionMapper;
 import com.zen.community.model.Question;
 import com.zen.community.model.User;
+import com.zen.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,17 +25,20 @@ import java.util.Objects;
 public class PublishController {
 
   @Autowired
-  QuestionMapper questionMapper;
+  QuestionService questionService;
 
+  // 发布问题页面
   @GetMapping("/publish")
   public String publish() {
     return "publish";
   }
 
+  // 添加问题请求
   @PostMapping("/publish")
-  public String doPublish(@RequestParam("title") String title,
-                          @RequestParam("description") String description,
-                          @RequestParam("tags") String tags,
+  public String doPublish(@RequestParam(name = "title", required = false) String title,
+                          @RequestParam(name = "description", required = false) String description,
+                          @RequestParam(name = "tags", required = false) String tags,
+                          @RequestParam(name = "questionId", required = false) Integer questionId,
                           HttpServletRequest request,
                           Model model) {
     User user = (User)request.getSession().getAttribute("user");
@@ -50,8 +56,9 @@ public class PublishController {
         return "publish";
       }
       Question question = new Question(title, description, System.currentTimeMillis(), user.getId(), tags);
+      question.setId(questionId);
       question.setGmtModified(question.getGmtCreate());
-      questionMapper.create(question);
+      questionService.createOrUpdate(question);
     } else {
       model.addAttribute("error", "用户未登录");
       model.addAttribute("title", title);
@@ -60,5 +67,17 @@ public class PublishController {
       return "publish";
     }
     return "redirect:/";
+  }
+
+  // 问题编辑
+  @GetMapping("/publish/{questionId}")
+  public String publishEdit(@PathVariable("questionId") Integer questionId,
+                            Model model) {
+    QuestionDTO question = questionService.getById(questionId);
+    model.addAttribute("title", question.getTitle());
+    model.addAttribute("description", question.getDescription());
+    model.addAttribute("tags", question.getTags());
+    model.addAttribute("questionId", question.getId());
+    return "/publish";
   }
 }

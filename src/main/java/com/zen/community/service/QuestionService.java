@@ -4,6 +4,7 @@ import com.zen.community.context.PaginationContext;
 import com.zen.community.dto.PaginationDTO;
 import com.zen.community.dto.QuestionDTO;
 import com.zen.community.mapper.QuestionMapper;
+import com.zen.community.model.Question;
 import com.zen.community.utils.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,4 +54,17 @@ public class QuestionService {
     return paginationDTO;
   }
 
+
+  // 判断问题创建还是更新
+  public void createOrUpdate(Question question) {
+    if (question.getId() == null) {
+      questionMapper.create(question);
+    } else {
+      questionMapper.update(question);
+    }
+  }
+
+  public QuestionDTO getById(Integer questionId) {
+    return questionMapper.getById(questionId);
+  }
 }

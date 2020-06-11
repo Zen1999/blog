@@ -28,6 +28,10 @@ public interface QuestionMapper {
   @Select("SELECT * FROM question")
   List<QuestionDTO> list();
 
+  @ResultMap(value = "creatorConstructor")
+  @Select("SELECT * FROM question WHERE id = #{questionId}")
+  QuestionDTO getById(@Param("questionId") Integer questionId);
+
   // Mybatis 注解版 使用了方法名作为方法映射id 所以在 Mapper 接口中不能重载方法
   // 查询问题根据修改时间排序
   @ResultMap(value = "creatorConstructor")
@@ -40,6 +44,9 @@ public interface QuestionMapper {
   List<QuestionDTO> paginationListByUserId(@Param("userId") Integer userId,
                                        @Param("offset") Integer offset,
                                        @Param("size") Integer size);
+
+  @Select("UPDATE question SET title = #{title}, description = #{description}, gmt_modified = #{gmtModified}, tags = #{tags} WHERE id = #{id}")
+  Boolean update(Question question);
 
   @Select("SELECT COUNT(1) FROM QUESTION WHERE creator_id = #{userId};")
   Integer countByUserId(@Param("userId") Integer userId);

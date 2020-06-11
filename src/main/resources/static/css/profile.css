@@ -27,3 +27,7 @@
 .pagination-fixed {
   float: right;
 }
+
+a:hover {
+  text-decoration: none;
+}

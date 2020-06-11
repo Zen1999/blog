@@ -15,7 +15,7 @@
 <div class="container padding-box">
   <div class="row">
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-      <h3><span th:text="${sectionName}"></span></h3>
+      <h3 th:text="${sectionName}"></h3>
       <hr/>
       <!-- th:if 和 th:each 放在一个标签中 当 each 遍历的对象为空时会报错 -->
       <div th:if="${pagination} != null">
@@ -28,7 +28,9 @@
             </a>
           </div>
           <div class="media-body">
-            <h4 class="media-heading" th:text="${question.title}"></h4>
+            <h4 class="media-heading">
+              <a th:href="@{'/question/'+${question.getId()}}" th:text="${question.getTitle()}"></a>
+            </h4>
             [[${question.description}]]
             <br/>
             <span class="desc-text">

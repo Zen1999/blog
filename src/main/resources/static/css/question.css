@@ -1,0 +1,42 @@
+/* question.css */
+.desc-label {
+  padding-left: 4px;
+}
+
+.desc-text .desc-label:first-child {
+  padding-left: 0;
+}
+
+/* after伪元素加上边框 */
+.desc-text span:not(.desc-label):after {
+  content: "";
+  padding: 0 4px;
+  border-right: 1px solid #000;
+}
+
+/* after伪元素最后一项去除边框 */
+.desc-text span:last-child:after {
+  content: "";
+  border: 0;
+}
+
+.edit-question {
+  color: #999;
+  font-size: 13px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.edit-icon {
+  padding-right: 4px;
+}
+
+.user-avatar {
+  height: 55px;
+}
+
+.question-about, .creator-info {
+  padding: 18px 0;
+}
