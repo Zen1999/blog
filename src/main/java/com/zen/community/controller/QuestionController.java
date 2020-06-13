@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class QuestionController {
 
-  @Autowired
+  @Autowired(required = false)
   private QuestionMapper questionMapper;
 
   @GetMapping("/question/{id}")

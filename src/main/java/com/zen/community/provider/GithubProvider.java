@@ -20,13 +20,17 @@ import java.util.concurrent.TimeUnit;
 public class GithubProvider {
 
   private final String oauthUrl = "https://github.com/login/oauth/access_token";
+  private final String userApiUrl = "https://api.github.com/user";
 
+
+  // 配置 httpClient
   private OkHttpClient client = new OkHttpClient().newBuilder()
       .connectTimeout(60, TimeUnit.SECONDS)
       .readTimeout(60, TimeUnit.SECONDS)
       .writeTimeout(60, TimeUnit.SECONDS)
       .build();
 
+  // GET https://github.com/login/oauth/access_token
   public String getAccessToken(AccessTokenDTO accessTokenDTO) {
     MediaType mediaType = MediaType.get("application/json; charset=utf-8");
     RequestBody body = RequestBody.create(JSON.toJSONString(accessTokenDTO), mediaType);
@@ -43,9 +47,10 @@ public class GithubProvider {
     return null;
   }
 
+  // GET https://api.github.com/user
   public GithubUser getUser(String accessToken) {
     Request request = new Request.Builder()
-        .url("https://api.github.com/user")
+        .url(userApiUrl)
         .header("Authorization", "token " + accessToken)
         .build();
     try (Response response = client.newCall(request).execute()) {

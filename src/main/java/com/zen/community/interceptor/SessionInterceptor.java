@@ -20,7 +20,7 @@ import java.util.Objects;
 public class SessionInterceptor implements HandlerInterceptor {
 
   // 自动注入失败原因，需要将 bean 交于 spring 接管
-  @Autowired
+  @Autowired(required = false)
   UserMapper userMapper;
 
   // 在请求处理之前 先进行登录判断逻辑
@@ -38,8 +38,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         for (Cookie cookie : cookies) {
           if ("token".equals(cookie.getName())) {
             // 找到 value 后 查找数据库 找出 user 对象 并 跳出循环
-            String value = cookie.getValue();
-            user = userMapper.getUserByToken(value);
+            user = userMapper.getByToken(cookie.getValue());
             break;
           }
         }
@@ -49,7 +48,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         }
       }
     }
-
+    // 放行
     return true;
   }
 }

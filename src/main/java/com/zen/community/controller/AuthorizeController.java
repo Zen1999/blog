@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 import java.util.UUID;
 
 
@@ -35,7 +34,7 @@ public class AuthorizeController {
   @Value("${github.oauth.redirect_uri}")
   private String redirect_uri;
 
-  @Autowired
+  @Autowired(required = false)
   private UserMapper userMapper;
 
   @GetMapping("/callback")
@@ -50,7 +49,7 @@ public class AuthorizeController {
     if (githubUser != null) {
       // 获取 githubUser 的 id
       String accountId = String.valueOf(githubUser.getId());
-      if ((user = userMapper.getUserByAccountId(accountId)) == null) {
+      if ((user = userMapper.getByAccountId(accountId)) == null) {
         // token 字段的数据结构为 CHAR(36) 使用 UUID.randomUUID() 生成的通用唯一识别码 插入记录
         user = new User(githubUser.getName(),
             accountId,

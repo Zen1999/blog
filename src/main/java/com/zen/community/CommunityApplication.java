@@ -1,8 +1,11 @@
 package com.zen.community;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// 开启 Mapper 接口 自动扫描
+@MapperScan("com.zen.community.mapper")
 @SpringBootApplication
 public class CommunityApplication {
 

@@ -9,7 +9,6 @@ package com.zen.community.utils;
 public class PaginationUtil {
 
   public static Integer page2Offset(Integer page, Integer size) {
-
     return (page - 1) * size;
   }
 }

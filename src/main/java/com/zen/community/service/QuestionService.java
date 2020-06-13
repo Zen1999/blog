@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class QuestionService {
 
-  @Autowired
+  @Autowired(required = false)
   private QuestionMapper questionMapper;
 
   public PaginationDTO paginationData(Integer page, Integer size) {
@@ -58,13 +58,14 @@ public class QuestionService {
   // 判断问题创建还是更新
   public void createOrUpdate(Question question) {
     if (question.getId() == null) {
-      questionMapper.create(question);
+      questionMapper.insert(question);
     } else {
-      questionMapper.update(question);
+      questionMapper.updateByPrimaryKeySelective(question);
     }
   }
 
   public QuestionDTO getById(Integer questionId) {
     return questionMapper.getById(questionId);
   }
+
 }

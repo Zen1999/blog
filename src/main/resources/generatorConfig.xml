@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate -->
+
+<generatorConfiguration>
+  <!-- 在pom.xml文件中已经依赖了h2数据库 -->
+  <!-- <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" /> -->
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <jdbcConnection driverClass="org.h2.Driver"
+                    connectionURL="jdbc:h2:E:\community\community"
+                    userId="zen"
+                    password="st564534461">
+    </jdbcConnection>
+
+    <!-- 可以将 DECIMAL NUMERIC 转化为 java.math.BigDecimal -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <!-- 用于生成 model 时项目位置和包位置 当包不存在时自动创建 -->
+    <javaModelGenerator targetPackage="com.zen.community.model" targetProject="src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <!-- 查出来的数据会进行trim操作 -->
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <!-- 用于生成 mapper.xml 时项目位置和包位置 当包不存在时自动创建 -->
+    <sqlMapGenerator targetPackage="mapper"  targetProject="src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <!-- 直接生成xml mapper 不用注解 -->
+    <!-- 用于生成 mapper.java 时项目位置和包位置 当包不存在时自动创建 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.zen.community.mapper"  targetProject="src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="user" domainObjectName="User" />
+    <table tableName="question" domainObjectName="Question" />
+      <!-- 列名和 modal 属性映射 true为与列名一致 false为驼峰命名法 -->
+      <!-- <property name="useActualColumnNames" value="false"/> -->
+      <!-- 插入时自动生成 key 并且返回 -->
+      <!-- <generatedKey column="ID" sqlStatement="DB2" identity="true" /> -->
+      <!-- <columnOverride column="DATE_FIELD" property="startDate" / >-->
+      <!-- 忽略列 -->
+      <!-- <ignoreColumn column="FRED" /> -->
+      <!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> -->
+
+  </context>
+</generatorConfiguration>

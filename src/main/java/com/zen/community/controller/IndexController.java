@@ -23,10 +23,10 @@ import java.util.Objects;
 @Controller
 public class IndexController {
 
-  @Autowired
+  @Autowired(required = false)
   private UserMapper userMapper;
 
-  @Autowired
+  @Autowired(required = false)
   private QuestionService questionService;
 
 
