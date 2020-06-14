@@ -1,7 +1,7 @@
 package com.zen.community.controller;
 
 import com.zen.community.dto.QuestionDTO;
-import com.zen.community.mapper.QuestionMapper;
+import com.zen.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class QuestionController {
 
   @Autowired(required = false)
-  private QuestionMapper questionMapper;
+  private QuestionService questionService;
 
   @GetMapping("/question/{id}")
   public String question(@PathVariable("id") Integer questionId,
                          Model model) {
-    QuestionDTO question = questionMapper.getById(questionId);
+    QuestionDTO question = questionService.getById(questionId);
     model.addAttribute("question", question);
     return "question";
   }

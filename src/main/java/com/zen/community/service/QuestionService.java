@@ -3,11 +3,13 @@ package com.zen.community.service;
 import com.zen.community.context.PaginationContext;
 import com.zen.community.dto.PaginationDTO;
 import com.zen.community.dto.QuestionDTO;
+import com.zen.community.exception.CustomizeException;
 import com.zen.community.mapper.QuestionMapper;
 import com.zen.community.model.Question;
 import com.zen.community.utils.PaginationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.zen.community.exception.CustomizeErrorCode;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class QuestionService {
   @Autowired(required = false)
   private QuestionMapper questionMapper;
 
+  // 查询结果为空 List 也不为空 不用做异常处理
   public PaginationDTO paginationData(Integer page, Integer size) {
     if (page <= 0) page = Integer.parseInt(PaginationContext.pageDefault);
     if (size <= 0) size = Integer.parseInt(PaginationContext.sizeDefault);
@@ -38,6 +41,8 @@ public class QuestionService {
     return paginationDTO;
   }
 
+
+  // 查询结果为空 List 也不为空 不用做异常处理
   public PaginationDTO paginationDataById(Integer userId, Integer page, Integer size) {
     if (page <= 0) page = Integer.parseInt(PaginationContext.pageDefault);
     if (size <= 0) size = Integer.parseInt(PaginationContext.sizeDefault);
@@ -58,14 +63,25 @@ public class QuestionService {
   // 判断问题创建还是更新
   public void createOrUpdate(Question question) {
     if (question.getId() == null) {
+      // 插入行 更新创建时间及修改时间
+      question.setGmtCreate(System.currentTimeMillis());
+      question.setGmtModified(question.getGmtCreate());
       questionMapper.insert(question);
     } else {
-      questionMapper.updateByPrimaryKeySelective(question);
+      // 更新行
+      question.setGmtModified(System.currentTimeMillis());
+      if (questionMapper.updateByPrimaryKeySelective(question) != 1) {
+        // 不等于 1 更新失败 抛出异常
+        throw new CustomizeException(CustomizeErrorCode.QUESTION_EDIT_NOT_FOUND);
+      }
+
     }
   }
 
   public QuestionDTO getById(Integer questionId) {
-    return questionMapper.getById(questionId);
+    QuestionDTO questionDTO = questionMapper.getById(questionId);
+    if (questionDTO == null) throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+    return questionDTO;
   }
 
 }

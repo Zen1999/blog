@@ -306,10 +306,9 @@ public class Question {
   }
 
 
-  public Question(String title, String description, long gmtCreate, Integer creatorId, String tags) {
+  public Question(String title, String description, Integer creatorId, String tags) {
     this.title = title;
     this.description = description;
-    this.gmtCreate = gmtCreate;
     this.creatorId = creatorId;
     this.tags = tags;
   }

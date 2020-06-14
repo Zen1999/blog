@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>社区</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <!--min.css-->
+  <link rel="stylesheet" href="/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/lib/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+<!-- 替换为导航模板 -->
+<div th:replace="navigation :: nav"></div>
+<div class="container padding-box">
+  <div class="row">
+   <div class="jumbotron">
+     <h1>出错了！！！</h1>
+     <p th:text="${message}">服务繁忙，请稍后再试</p>
+     <p>
+       <a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a>
+     </p>
+   </div>
+  </div>
+</div>
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js" type="application/javascript"></script>
+</body>
+</html>

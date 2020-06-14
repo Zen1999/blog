@@ -1,7 +1,6 @@
 package com.zen.community.controller;
 
 import com.zen.community.dto.QuestionDTO;
-import com.zen.community.mapper.QuestionMapper;
 import com.zen.community.model.Question;
 import com.zen.community.model.User;
 import com.zen.community.service.QuestionService;
@@ -41,6 +40,7 @@ public class PublishController {
                           @RequestParam(name = "questionId", required = false) Integer questionId,
                           HttpServletRequest request,
                           Model model) {
+    // 获取作者信息
     User user = (User)request.getSession().getAttribute("user");
     if (!Objects.isNull(user)) {
       if (title.equals("")) {
@@ -55,9 +55,8 @@ public class PublishController {
         model.addAttribute("error", "标签不能为空");
         return "publish";
       }
-      Question question = new Question(title, description, System.currentTimeMillis(), user.getId(), tags);
+      Question question = new Question(title, description, user.getId(), tags);
       question.setId(questionId);
-      question.setGmtModified(question.getGmtCreate());
       questionService.createOrUpdate(question);
     } else {
       model.addAttribute("error", "用户未登录");
