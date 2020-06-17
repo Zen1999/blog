@@ -84,4 +84,8 @@ public class QuestionService {
     return questionDTO;
   }
 
+  public void increaseView(Integer questionId) {
+    // 添加数据库字段 避免并发时脏读脏写 使用锁 或者 事务 或者 原子性操作即可
+    if (questionMapper.increaseViewCount(questionId) != 1) throw new CustomizeException(CustomizeErrorCode.QUESTION_EDIT_NOT_FOUND);
+  }
 }

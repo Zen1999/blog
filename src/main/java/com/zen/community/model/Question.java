@@ -312,4 +312,7 @@ public class Question {
     this.creatorId = creatorId;
     this.tags = tags;
   }
+
+  // Null Constructor
+  public Question() {}
 }

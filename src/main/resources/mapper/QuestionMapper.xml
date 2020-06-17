@@ -494,4 +494,8 @@
     SELECT COUNT(1) FROM question WHERE creator_id = #{userId}
   </select>
 
+  <update id="increaseViewCount">
+    UPDATE question SET view_count = (isnull(view_count, 0) + 1) WHERE question.id = #{questionId};
+  </update>
+
 </mapper>

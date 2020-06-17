@@ -132,4 +132,6 @@ public interface QuestionMapper {
   List<QuestionDTO> paginationListByUserId(Integer userId, Integer offset, Integer size);
 
   Integer countByUserId(Integer userId);
+
+  Integer increaseViewCount(Integer questionId);
 }
