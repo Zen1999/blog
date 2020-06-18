@@ -39,9 +39,8 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
-    <table tableName="user" domainObjectName="User" />
-    <table tableName="question" domainObjectName="Question" />
-      <!-- 列名和 modal 属性映射 true为与列名一致 false为驼峰命名法 -->
+    <table tableName="comment" domainObjectName="Comment" />
+      <!-- 列名和 modal 属性映射 true为与列名一致 false为驼mvn mybatis-generator:generate峰命名法 -->
       <!-- <property name="useActualColumnNames" value="false"/> -->
       <!-- 插入时自动生成 key 并且返回 -->
       <!-- <generatedKey column="ID" sqlStatement="DB2" identity="true" /> -->

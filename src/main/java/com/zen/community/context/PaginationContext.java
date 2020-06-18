@@ -8,4 +8,6 @@ package com.zen.community.context;
 public class PaginationContext {
   public static final String pageDefault = "1";
   public static final String sizeDefault = "8";
+
+  private PaginationContext() {}
 }

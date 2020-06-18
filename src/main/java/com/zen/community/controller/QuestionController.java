@@ -20,7 +20,7 @@ public class QuestionController {
   private QuestionService questionService;
 
   @GetMapping("/question/{id}")
-  public String question(@PathVariable("id") Integer questionId,
+  public String question(@PathVariable("id") Long questionId,
                          Model model) {
     QuestionDTO question = questionService.getById(questionId);
     // 阅读数增长

@@ -1,7 +1,7 @@
 package com.zen.community.controller;
 
 import com.zen.community.context.PaginationContext;
-import com.zen.community.context.ProfileAction;
+import com.zen.community.enums.ProfileAction;
 import com.zen.community.dto.PaginationDTO;
 import com.zen.community.model.User;
 import com.zen.community.service.QuestionService;

@@ -43,7 +43,7 @@ public class QuestionService {
 
 
   // 查询结果为空 List 也不为空 不用做异常处理
-  public PaginationDTO paginationDataById(Integer userId, Integer page, Integer size) {
+  public PaginationDTO paginationDataById(Long userId, Integer page, Integer size) {
     if (page <= 0) page = Integer.parseInt(PaginationContext.pageDefault);
     if (size <= 0) size = Integer.parseInt(PaginationContext.sizeDefault);
     PaginationDTO paginationDTO = new PaginationDTO();
@@ -78,13 +78,13 @@ public class QuestionService {
     }
   }
 
-  public QuestionDTO getById(Integer questionId) {
+  public QuestionDTO getById(Long questionId) {
     QuestionDTO questionDTO = questionMapper.getById(questionId);
     if (questionDTO == null) throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
     return questionDTO;
   }
 
-  public void increaseView(Integer questionId) {
+  public void increaseView(Long questionId) {
     // 添加数据库字段 避免并发时脏读脏写 使用锁 或者 事务 或者 原子性操作即可
     if (questionMapper.increaseViewCount(questionId) != 1) throw new CustomizeException(CustomizeErrorCode.QUESTION_EDIT_NOT_FOUND);
   }

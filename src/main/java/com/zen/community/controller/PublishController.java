@@ -37,7 +37,7 @@ public class PublishController {
   public String doPublish(@RequestParam(name = "title", required = false) String title,
                           @RequestParam(name = "description", required = false) String description,
                           @RequestParam(name = "tags", required = false) String tags,
-                          @RequestParam(name = "questionId", required = false) Integer questionId,
+                          @RequestParam(name = "questionId", required = false) Long questionId,
                           HttpServletRequest request,
                           Model model) {
     // 获取作者信息
@@ -70,7 +70,7 @@ public class PublishController {
 
   // 问题编辑
   @GetMapping("/publish/{questionId}")
-  public String publishEdit(@PathVariable("questionId") Integer questionId,
+  public String publishEdit(@PathVariable("questionId") Long questionId,
                             Model model) {
     QuestionDTO question = questionService.getById(questionId);
     model.addAttribute("title", question.getTitle());
