@@ -14,26 +14,54 @@
 <div class="container padding-box">
   <div class="row">
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-      <h3 th:text="${question.getTitle()}"></h3>
-      <span class="desc-text">
-        <span class="desc-label">作者:</span>
-        <span th:text="${question.creator.getName()}"></span>
-        <span class="desc-label">关注数:</span>
-        <span th:text="${question.getLikeCount()}"></span>
-        <span class="desc-label">回复数:</span>
-        <span th:text="${question.getCommentCount()}"></span>
-        <span class="desc-label">阅读数:</span>
-        <span th:text="${question.getViewCount()}"></span>
-        <span class="desc-label">发布时间:</span>
-        <span th:text="${#dates.format(question.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
-      </span>
-      <hr/>
-      <a th:href="@{'/publish/'+${question.getId()}}" class="edit-question">
-        <span class="glyphicon glyphicon-pencil edit-icon" aria-hidden="true"></span>编辑
-      </a>
-      <hr/>
-      <!-- 问题描述 -->
-      <div th:text="${question.getDescription()}"></div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3 th:text="${question.getTitle()}"></h3>
+        <span class="desc-text">
+          <span class="desc-label">作者:</span>
+          <span th:text="${question.creator.getName()}"></span>
+          <span class="desc-label">关注数:</span>
+          <span th:text="${question.getLikeCount()}"></span>
+          <span class="desc-label">回复数:</span>
+          <span th:text="${question.getCommentCount()}"></span>
+          <span class="desc-label">阅读数:</span>
+          <span th:text="${question.getViewCount()}"></span>
+          <span class="desc-label">发布时间:</span>
+          <span th:text="${#dates.format(question.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+        </span>
+        <hr/>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- 问题描述 -->
+        <p th:text="${question.getDescription()}" class="text-description"></p>
+        <hr/>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <a th:href="@{'/publish/'+${question.getId()}}" class="edit-question">
+          <span class="glyphicon glyphicon-pencil edit-icon" aria-hidden="true"></span>编辑
+        </a>
+        <hr/>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="media media-sm">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object img-circle reply-user-avatar"
+                   th:src="${question.creator.getAvatarUrl()}">
+            </a>
+          </div>
+          <div class="media-body media-middle">
+            <h5 class="media-heading">
+              <span th:text="${question.creator.getName()}"></span>
+            </h5>
+          </div>
+        </div>
+        <input type="hidden" name="question" th:value="${question.getId()}">
+        <textarea class="form-control reply-text-area" id="reply-content" rows="4"></textarea>
+        <button type="button" class="btn btn-success btn-reply" id="reply">回复</button>
+      </div>
     </div>
     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
       <div class="creator-info col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -61,5 +89,6 @@
 </div>
 <script src="/lib/js/jquery.js"></script>
 <script src="/lib/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/js/question.js"></script>
 </body>
 </html>

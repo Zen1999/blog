@@ -24,8 +24,9 @@
           </a>
         </div>
         <div class="media-body media-middle">
-          <h4 class="media-heading" th:text="${question.title}"></h4>
-          [[${question.description}]]
+          <h4 class="media-heading"><a th:href="@{'/question/'+${question.getId()}}"
+                                       th:text="${question.title}"></a></h4>
+          <span th:text="${question.description}"></span>
           <br/>
           <span class="desc-text">
             <span th:text="${question.getLikeCount()}"></span> 人关注 •
@@ -72,5 +73,6 @@
 </div>
 <script src="/lib/js/jquery.js"></script>
 <script src="/lib/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>

@@ -40,3 +40,20 @@ a:hover {
 .question-about, .creator-info {
   padding: 18px 0;
 }
+
+.text-description {
+  font-size: 15px;
+}
+
+.reply-user-avatar {
+  height: 40px;
+}
+
+.reply-text-area {
+  margin: 15px 0;
+  resize: none;
+}
+
+.btn-reply {
+  float: right;
+}

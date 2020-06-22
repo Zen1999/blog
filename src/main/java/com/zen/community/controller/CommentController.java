@@ -34,12 +34,16 @@ public class CommentController {
   @PostMapping("/comment")
   public Object comment(@RequestBody CommentDTO commentDTO,
                         HttpServletRequest request) {
+    // 如果请求方式不是 application/json 则抛出请求异常
     if (!ContentTypeContext.APPLICATION_JSON.equals(request.getContentType()))
       return ResultDTO.errorOf(CustomizeErrorCode.REQUEST_4_SERIES_ERROR);
+    // 验证用户是否登录
     User user = (User) request.getSession().getAttribute("user");
     if (user == null) return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN_OPERATE_ERROR);
+    // 插入评论
     commentService.create(commentDTO);
 
+    // 返回 json
     return ResultDTO.ok();
   }
 }
