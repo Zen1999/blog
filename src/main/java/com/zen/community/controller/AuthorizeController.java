@@ -38,6 +38,7 @@ public class AuthorizeController {
   @Autowired(required = false)
   private UserMapper userMapper;
 
+  // Github 授权登录
   @GetMapping("/callback")
   public String callback(@RequestParam(name = "code") String code,
                          @RequestParam(name = "state") String state,
@@ -63,17 +64,19 @@ public class AuthorizeController {
       }
       // 用户信息获取成功，改变登录态
       Cookie cookie = new Cookie("token", user.getToken());
-      // cookie 存活时间永久
-      cookie.setMaxAge(0);
+      // cookie 存活时间 三个月
+      cookie.setMaxAge(60 * 60 * 24 * 90);
       response.addCookie(cookie);
     }
     return "redirect:/";
   }
 
+  // 登出
   @GetMapping("/logout")
   public String logout(HttpServletRequest request, HttpServletResponse response) {
     request.getSession().removeAttribute("user");
     Cookie cookie = new Cookie("token", null);
+    // 删除 cookie
     cookie.setMaxAge(0);
     response.addCookie(cookie);
     return "redirect:/";

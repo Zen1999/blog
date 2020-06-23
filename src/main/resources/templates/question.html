@@ -14,6 +14,7 @@
 <div class="container padding-box">
   <div class="row">
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+      <!-- 问题标题 -->
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3 th:text="${question.getTitle()}"></h3>
         <span class="desc-text">
@@ -30,20 +31,37 @@
         </span>
         <hr/>
       </div>
-
+      <!-- 问题描述 -->
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <!-- 问题描述 -->
         <p th:text="${question.getDescription()}" class="text-description"></p>
         <hr/>
       </div>
-
+      <!-- 工具栏 -->
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <a th:href="@{'/publish/'+${question.getId()}}" class="edit-question">
           <span class="glyphicon glyphicon-pencil edit-icon" aria-hidden="true"></span>编辑
         </a>
         <hr/>
       </div>
+      <!-- 评论列表 -->
 
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="media media-sm">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object img-circle reply-user-avatar"
+                   th:src="${question.creator.getAvatarUrl()}">
+            </a>
+          </div>
+          <div class="media-body media-middle">
+            <h5 class="media-heading">
+              <span th:text="${question.creator.getName()}"></span>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <!-- 回复内容 -->
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="media media-sm">
           <div class="media-left">
