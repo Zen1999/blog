@@ -57,3 +57,16 @@ a:hover {
 .btn-reply {
   float: right;
 }
+
+.reply-content {
+  transform: translate(0, 50%);
+}
+
+.tool-bar {
+  margin: 12px 0 0 2px;
+}
+
+.tool-item {
+  margin-right: 10px;
+}
+

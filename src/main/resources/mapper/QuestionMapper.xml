@@ -440,7 +440,11 @@
 
   <!-- QuestionDTO 结果集 -->
   <resultMap id="CreatorMap" type="com.zen.community.dto.QuestionDTO" extends="BaseResultMap">
-    <association property="creator" javaType="com.zen.community.model.User" autoMapping="true" />
+    <association property="creator" javaType="com.zen.community.model.User" autoMapping="true">
+      <id column="user_id" property="id" jdbcType="BIGINT" />
+      <result column="user_gmt_create" property="gmtCreate" jdbcType="BIGINT" />
+      <result column="user_gmt_modified" property="gmtModified" jdbcType="BIGINT" />
+    </association>
   </resultMap>
 
   <!-- 添加联合查询 -->
@@ -448,8 +452,8 @@
   <select id="getList" resultMap="CreatorMap">
     SELECT q.id, q.title, q.description, q.gmt_create,
     q.gmt_modified, q.creator_id, q.comment_count, q.view_count,
-    q.like_count, q.tags, u.id, u.account_id, u.name, u.token,
-    u.gmt_create, u.gmt_modified, u.bio, u.avatar_url
+    q.like_count, q.tags, u.id as user_id, u.account_id, u.name, u.token,
+    u.gmt_create as user_gmt_create, u.gmt_modified as user_gmt_modified, u.bio, u.avatar_url
     FROM question q LEFT JOIN user u WHERE q.CREATOR_ID = u.ID;
   </select>
 
@@ -457,8 +461,8 @@
   <select id="getById" resultMap="CreatorMap">
     SELECT q.id, q.title, q.description, q.gmt_create,
     q.gmt_modified, q.creator_id, q.comment_count, q.view_count,
-    q.like_count, q.tags, u.id, u.account_id, u.name, u.token,
-    u.gmt_create, u.gmt_modified, u.bio, u.avatar_url
+    q.like_count, q.tags, u.id as user_id, u.account_id, u.name, u.token,
+   u.gmt_create as user_gmt_create, u.gmt_modified as user_gmt_modified, u.bio, u.avatar_url
     FROM question q LEFT JOIN user u WHERE q.creator_id = u.id AND q.id = #{questionId};
   </select>
 
@@ -466,8 +470,8 @@
   <select id="paginationList" resultMap="CreatorMap">
     SELECT q.id, q.title, q.description, q.gmt_create,
     q.gmt_modified, q.creator_id, q.comment_count, q.view_count,
-    q.like_count, q.tags, u.id, u.account_id, u.name, u.token,
-    u.gmt_create, u.gmt_modified, u.bio, u.avatar_url
+    q.like_count, q.tags, u.id as user_id, u.account_id, u.name, u.token,
+    u.gmt_create as user_gmt_create, u.gmt_modified as user_gmt_modified, u.bio, u.avatar_url
     FROM question q LEFT JOIN user u WHERE q.creator_id = u.id
     ORDER BY GMT_MODIFIED DESC LIMIT #{offset}, #{size};
   </select>
@@ -481,8 +485,8 @@
   <select id="paginationListByUserId" resultMap="CreatorMap">
     SELECT q.id, q.title, q.description, q.gmt_create,
     q.gmt_modified, q.creator_id, q.comment_count, q.view_count,
-    q.like_count, q.tags, u.id, u.account_id, u.name, u.token,
-    u.gmt_create, u.gmt_modified, u.bio, u.avatar_url
+    q.like_count, q.tags, u.id as user_id, u.account_id, u.name, u.token,
+    u.gmt_create as user_gmt_create, u.gmt_modified as user_gmt_modified, u.bio, u.avatar_url
     FROM question q LEFT JOIN user u WHERE q.creator_id = u.id
     AND u.id = #{userId}
     ORDER BY GMT_MODIFIED DESC LIMIT #{offset}, #{size};

@@ -66,6 +66,8 @@ public class AuthorizeController {
       Cookie cookie = new Cookie("token", user.getToken());
       // cookie 存活时间 三个月
       cookie.setMaxAge(60 * 60 * 24 * 90);
+      // 防止 XSS 攻击
+      cookie.setHttpOnly(true);
       response.addCookie(cookie);
     }
     return "redirect:/";

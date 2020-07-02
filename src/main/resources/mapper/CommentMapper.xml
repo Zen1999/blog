@@ -328,4 +328,19 @@
       CONTENT = #{content,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+
+  <!-- CommentDTO 结果集 -->
+  <resultMap id="CommentDTOMap" type="com.zen.community.dto.CommentDTO" extends="BaseResultMap">
+    <association property="commentUser" javaType="com.zen.community.model.User" autoMapping="true">
+      <id column="user_id" property="id" jdbcType="BIGINT" />
+      <result column="user_gmt_create" property="gmtCreate" jdbcType="BIGINT" />
+      <result column="user_gmt_modified" property="gmtModified" jdbcType="BIGINT" />
+    </association>
+  </resultMap>
+
+  <select id="getListByQuestionId" resultMap="CommentDTOMap">
+    SELECT c.id, c.parent_id, c.type, c.commentator, c.gmt_create, c.gmt_modified,
+    c.like_count, c.content, u.id as user_id, u.account_id, u.name, u.token, u.gmt_create as user_gmt_create,
+    u.gmt_modified as user_gmt_modified, u.bio, u.avatar_url FROM COMMENT c LEFT JOIN User u WHERE c.parent_id = #{questionId} AND c.type = #{type};
+  </select>
 </mapper>

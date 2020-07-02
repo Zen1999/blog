@@ -1,12 +1,9 @@
 package com.zen.community.controller;
 
 import com.zen.community.context.ContentTypeContext;
-import com.zen.community.dto.CommentDTO;
+import com.zen.community.dto.CommentCreateDTO;
 import com.zen.community.dto.ResultDTO;
 import com.zen.community.exception.CustomizeErrorCode;
-import com.zen.community.exception.CustomizeException;
-import com.zen.community.mapper.CommentMapper;
-import com.zen.community.model.Comment;
 import com.zen.community.model.User;
 import com.zen.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +29,7 @@ public class CommentController {
   // 评论功能
   @ResponseBody
   @PostMapping("/comment")
-  public Object comment(@RequestBody CommentDTO commentDTO,
+  public Object comment(@RequestBody CommentCreateDTO commentCreateDTO,
                         HttpServletRequest request) {
     // 如果请求方式不是 application/json 则抛出请求异常
     if (!ContentTypeContext.APPLICATION_JSON.equals(request.getContentType()))
@@ -41,7 +38,8 @@ public class CommentController {
     User user = (User) request.getSession().getAttribute("user");
     if (user == null) return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN_OPERATE_ERROR);
     // 插入评论
-    commentService.create(commentDTO);
+
+    commentService.create(commentCreateDTO, user.getId());
 
     // 返回 json
     return ResultDTO.ok();

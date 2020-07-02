@@ -1,6 +1,8 @@
 package com.zen.community;
 
 import com.zen.community.dto.AccessTokenDTO;
+import com.zen.community.dto.CommentDTO;
+import com.zen.community.mapper.CommentMapper;
 import com.zen.community.mapper.QuestionMapper;
 import com.zen.community.mapper.UserMapper;
 import com.zen.community.service.CommentService;
@@ -22,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @SpringBootTest
 class CommunityApplicationTests {
@@ -38,6 +41,9 @@ class CommunityApplicationTests {
   @Autowired(required = false)
   private CommentService commentService;
 
+  @Autowired(required = false)
+  private CommentMapper commentMapper;
+
   private final String oauthUrl = "https://github.com/login/oauth/access_token";
   private final String userApiUrl = "https://api.github.com/user";
 
@@ -52,22 +58,6 @@ class CommunityApplicationTests {
   void contextLoads() {
     // 测试连接 H2 database
     // H2 database 只能支持单线程读写
-    CloseableHttpClient client = HttpClientBuilder.create().build();;
-    try {
-      URIBuilder uriBuilder = new URIBuilder(oauthUrl);
-      uriBuilder.addParameter("client_id", client_id);
-      uriBuilder.addParameter("client_secret", client_secret);
-      uriBuilder.addParameter("code", "5e2b54c36eee7c4bb92c");
-      URI uri = uriBuilder.build();
-      HttpGet httpPost = new HttpGet(uri);
-      CloseableHttpResponse response = client.execute(httpPost);
-      HttpEntity entity = response.getEntity();
-      if (entity != null) {
-        System.out.println(EntityUtils.toString(entity));
-      }
-    } catch (URISyntaxException | IOException e) {
-      e.printStackTrace();
-    }
   }
 
 }
